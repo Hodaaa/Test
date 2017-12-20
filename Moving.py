@@ -1,16 +1,16 @@
 import numpy as np
 
 #if it is a valid places to any player it will return all states and its sucessors it will be earned else it will return null
+import Coin
 def decide_place(color , board):
     validMoves = {}
     validParts = {}
     valid = 0
+
     for x in range(8):
         for y in range(8):
             place = [x , y]
-
             income = isv(board, color, place)
-
             if len(income) > 0:
                 #print  place
                 validMoves[valid] = place
@@ -30,10 +30,11 @@ def isValidMove(board , color , place):
         othercolor = 'B'
     else:
         othercolor = 'W'
-    copyOfPlace = place
+
 
     for x, y in [[1, 0], [-1, 0], [-1, -1], [0, -1], [1, -1], [-1, 1], [0, 1], [1, 1]]:
         xstart, ystart = x , y
+        copyOfPlace = place
         copyOfPlace[0] = copyOfPlace[0] + x
         copyOfPlace[1] = copyOfPlace[1] + y
         if not isOntabel(copyOfPlace):
@@ -48,15 +49,10 @@ def isValidMove(board , color , place):
 
                 copyOfPlace[0] = copyOfPlace[0] + x
                 copyOfPlace[1] = copyOfPlace[1] + y
-                #print copyOfPlace
-
-                if not isOntabel(place):
-                    continue
             if not isOntabel(copyOfPlace):
                 continue
             #There is a other color here that will be earned
             if board[copyOfPlace[0]][copyOfPlace[1]].Color == color:
-
                 while True:
                     copyOfPlace[0] = copyOfPlace[0] - x
                     copyOfPlace[1] = copyOfPlace[1] - y
@@ -71,25 +67,30 @@ def isv(board , color , place):
         othercolor = 'B'
     else:
         othercolor = 'W'
+    # print board[2][4].Color
 
-    copyOfPlace = list(place)
+
     for x, y in [[1, 0], [-1, 0], [-1, -1], [0, -1], [1, -1], [-1, 1], [0, 1], [1, 1]]:
         xstart, ystart = x , y
+        copyOfPlace = list(place)
         copyOfPlace[0] = copyOfPlace[0] + x
         copyOfPlace[1] = copyOfPlace[1] + y
+
         if not isOntabel(copyOfPlace):
             continue
         while board[copyOfPlace[0]][copyOfPlace[1]].Color == othercolor:
             copyOfPlace[0] = copyOfPlace[0] + x
             copyOfPlace[1] = copyOfPlace[1] + y
-        if board[copyOfPlace[0]][copyOfPlace[1]].Color == color:
-            while x >= xstart and y >= ystart:
-                copyOfPlace[0] = copyOfPlace[0] - x
-                copyOfPlace[1] = copyOfPlace[1] - y
-                valid.append(list(copyOfPlace))
-                x = x - 1
-                y = y - 1
-        copyOfPlace = list(place)
+            if board[copyOfPlace[0]][copyOfPlace[1]].Color == color:
+                # print 'copyOfPlace[0]]'
+                # print copyOfPlace[0] , copyOfPlace[1]
+                while x >= xstart and y >= ystart:
+                    copyOfPlace[0] = copyOfPlace[0] - x
+                    copyOfPlace[1] = copyOfPlace[1] - y
+                    valid.append(list(copyOfPlace))
+                    x = x - 1
+                    y = y - 1
+            # copyOfPlace = list(place)
     return valid
 
 
@@ -196,3 +197,9 @@ def iswon(board):
             return player
     else:
         return None  # lw fe abyad w eswed w fady  yb2a m7ade4 ksb
+
+
+
+x , y , z = decide_place('W' , Coin.board)
+print x , y ,z
+
