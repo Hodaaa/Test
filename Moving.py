@@ -13,7 +13,7 @@ def decide_place(color , board):
 
             if len(income) > 0:
                 #print  place
-                #validMoves[valid] = place
+                validMoves[valid] = place
                 validParts[valid] = income
                 valid += 1
     return validMoves , validParts , valid
@@ -23,47 +23,47 @@ def isOntabel(place):
     return place[0] >= 0 and place[0] <= 7 and place[1] >= 0 and place[1] <= 7
 
     #detrimne if the move is valid or not and if it is vlid it returns the places which will be turned else it will return false
-# def isValidMove(board , color , place):
-#     validMoves = []
-#
-#     if color == 'W':
-#         othercolor = 'B'
-#     else:
-#         othercolor = 'W'
-#     copyOfPlace = place
-#
-#     for x, y in [[1, 0], [-1, 0], [-1, -1], [0, -1], [1, -1], [-1, 1], [0, 1], [1, 1]]:
-#         xstart, ystart = x , y
-#         copyOfPlace[0] = copyOfPlace[0] + x
-#         copyOfPlace[1] = copyOfPlace[1] + y
-#         if not isOntabel(copyOfPlace):
-#             continue
-#         # There is a other color here that may be earned
-#         if board[copyOfPlace[0]][copyOfPlace[1]].Color == othercolor:
-#             copyOfPlace[0] = copyOfPlace[0] + x
-#             copyOfPlace[1] = copyOfPlace[1] + y
-#             if not isOntabel(copyOfPlace):
-#                 continue
-#             while board[copyOfPlace[0]][copyOfPlace[1]].Color == othercolor:
-#
-#                 copyOfPlace[0] = copyOfPlace[0] + x
-#                 copyOfPlace[1] = copyOfPlace[1] + y
-#                 #print copyOfPlace
-#
-#                 if not isOntabel(place):
-#                     continue
-#             if not isOntabel(copyOfPlace):
-#                 continue
-#             #There is a other color here that will be earned
-#             if board[copyOfPlace[0]][copyOfPlace[1]].Color == color:
-#
-#                 while True:
-#                     copyOfPlace[0] = copyOfPlace[0] - x
-#                     copyOfPlace[1] = copyOfPlace[1] - y
-#                     if x == xstart and y == ystart:
-#                         break
-#                     validMoves.append(copyOfPlace)
-#     return validMoves
+def isValidMove(board , color , place):
+    validMoves = []
+
+    if color == 'W':
+        othercolor = 'B'
+    else:
+        othercolor = 'W'
+    copyOfPlace = place
+
+    for x, y in [[1, 0], [-1, 0], [-1, -1], [0, -1], [1, -1], [-1, 1], [0, 1], [1, 1]]:
+        xstart, ystart = x , y
+        copyOfPlace[0] = copyOfPlace[0] + x
+        copyOfPlace[1] = copyOfPlace[1] + y
+        if not isOntabel(copyOfPlace):
+            continue
+        # There is a other color here that may be earned
+        if board[copyOfPlace[0]][copyOfPlace[1]].Color == othercolor:
+            copyOfPlace[0] = copyOfPlace[0] + x
+            copyOfPlace[1] = copyOfPlace[1] + y
+            if not isOntabel(copyOfPlace):
+                continue
+            while board[copyOfPlace[0]][copyOfPlace[1]].Color == othercolor:
+
+                copyOfPlace[0] = copyOfPlace[0] + x
+                copyOfPlace[1] = copyOfPlace[1] + y
+                #print copyOfPlace
+
+                if not isOntabel(place):
+                    continue
+            if not isOntabel(copyOfPlace):
+                continue
+            #There is a other color here that will be earned
+            if board[copyOfPlace[0]][copyOfPlace[1]].Color == color:
+
+                while True:
+                    copyOfPlace[0] = copyOfPlace[0] - x
+                    copyOfPlace[1] = copyOfPlace[1] - y
+                    if x == xstart and y == ystart:
+                        break
+                    validMoves.append(copyOfPlace)
+    return validMoves
 
 def isv(board , color , place):
     valid = []
@@ -77,20 +77,18 @@ def isv(board , color , place):
         xstart, ystart = x , y
         copyOfPlace[0] = copyOfPlace[0] + x
         copyOfPlace[1] = copyOfPlace[1] + y
-        #print copyOfPlace
         if not isOntabel(copyOfPlace):
             continue
         while board[copyOfPlace[0]][copyOfPlace[1]].Color == othercolor:
             copyOfPlace[0] = copyOfPlace[0] + x
             copyOfPlace[1] = copyOfPlace[1] + y
-            print place ,  copyOfPlace
-
         if board[copyOfPlace[0]][copyOfPlace[1]].Color == color:
             while x >= xstart and y >= ystart:
                 copyOfPlace[0] = copyOfPlace[0] - x
                 copyOfPlace[1] = copyOfPlace[1] - y
                 valid.append(list(copyOfPlace))
-
+                x = x - 1
+                y = y - 1
         copyOfPlace = list(place)
     return valid
 
